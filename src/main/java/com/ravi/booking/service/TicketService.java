@@ -44,7 +44,7 @@ public class TicketService {
       Section section = new Random().nextBoolean() ? Section.A : Section.B;
       int seatNumber = selectionStrategy.selectSeat(section, ticketRepository.getAllocatedSeats(section));
 
-      if(seatNumber==-1){
+      if (seatNumber == -1) {
         Section otherSection = (section == Section.A) ? Section.B : Section.A;
         seatNumber = selectionStrategy.selectSeat(otherSection, ticketRepository.getAllocatedSeats(otherSection));
 
@@ -58,8 +58,16 @@ public class TicketService {
 
       TicketEntity ticket = new TicketEntity(user, price, section, seatNumber, request.getJourney().getTo(), request.getJourney().getFrom());
       ticket = ticketRepository.save(ticket);
+
+      if (ticket == null) {
+        throw new RuntimeException("Ticket not saved properly.");
+      }
+
       user.setTicketEntities(ticket);
-      return ticket.getId();
+      return ticket.getId();  // Only return if ticket creation is successful
+    } catch (SeatUnavailableException e) {
+      logger.error("Seat unavailable: {}", e.getMessage(), e);
+      throw e;  // Rethrow the specific exception
     } catch (Exception e) {
       logger.error("Error purchasing ticket", e);
       throw new RuntimeException("Failed to purchase ticket: " + e.getMessage());
@@ -73,7 +81,12 @@ public class TicketService {
         throw new TicketNotFoundException("Ticket with ID " + ticketId + " not found");
       }
       return Util.toProto(ticket);
-    } catch (Exception e) {
+    }
+    catch (TicketNotFoundException e) {
+      logger.error("Ticket with ID {} not found", ticketId, e);
+      throw e;  // Rethrow the specific exception
+    }
+    catch (Exception e) {
       logger.error("Error retrieving ticket receipt", e);
       throw new RuntimeException("Failed to retrieve ticket receipt: " + e.getMessage());
     }
@@ -86,7 +99,10 @@ public class TicketService {
         throw new TicketNotFoundException("Ticket with ID " + ticketId + " not found");
       }
       ticketRepository.delete(ticketId);
-    } catch (Exception e) {
+    } catch (TicketNotFoundException e) {
+      logger.error("Ticket with ID {} not found", ticketId, e);
+      throw e;  // Rethrow specific exception
+    }catch (Exception e) {
       logger.error("Error removing user booking", e);
       throw new RuntimeException("Failed to remove user booking: " + e.getMessage());
     }
@@ -120,6 +136,7 @@ public class TicketService {
       }
       ticket.setSection(section);
       ticket.setSeatNo(seatNumber);
+      ticketRepository.save(ticket);
       return Util.toProto(ticket);
     } catch (Exception e) {
       logger.error("Error modifying seat", e);
