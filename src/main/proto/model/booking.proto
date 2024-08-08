@@ -1,0 +1,48 @@
+syntax = "proto3";
+
+option java_multiple_files = true;
+option java_package = "org.ravi.model";
+option java_outer_classname = "TrainBookingProto";
+
+service TrainBookingService {
+  rpc PurchaseTicket (PurchaseTicketRequest) returns (PurchaseTicketResponse) {}
+}
+
+
+enum Section {
+  S_A = 0;
+  S_B = 1;
+}
+
+message User {
+  string id = 1;
+  string first_name = 2;
+  string last_name = 3;
+  string email = 4;
+}
+
+message Journey{
+  string to=1;
+  string from=2;
+
+}
+
+message Ticket {
+  string id = 1;
+  string from = 2;
+  string to = 3;
+  User user = 4;
+  double price = 5;
+  Section section = 6;
+}
+
+message PurchaseTicketRequest {
+  User user = 1;
+  Journey journey = 2;
+}
+
+message PurchaseTicketResponse {
+  Ticket ticket = 1;
+}
+
+

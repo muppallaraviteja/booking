@@ -1,4 +1,4 @@
-package com.ravi.booking.Controller;
+package com.ravi.booking.controller;
 
 
 import org.ravi.model.HelloReply;
