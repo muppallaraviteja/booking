@@ -7,6 +7,7 @@ option java_outer_classname = "TrainBookingProto";
 service TrainBookingService {
   rpc PurchaseTicket (PurchaseTicketRequest) returns (PurchaseTicketResponse) {};
   rpc getReceipt (GetReceiptRequest) returns (GetReceiptResponse) {}
+  rpc getUsersBySection (GetUsersBySectionRequest) returns (GetUsersBySectionResponseList) {}
 }
 
 
@@ -55,12 +56,18 @@ message GetReceiptResponse{
 
 
 message GetUsersBySectionRequest {
-  string section = 1;
+  Section section = 1;
 }
 
-message UsersResponse {
-  repeated User users = 1;
+message GetUsersBySectionResponse{
+  string userName=1;
+  int32 seatNo=2;
 }
+
+message GetUsersBySectionResponseList {
+  repeated GetUsersBySectionResponse response = 1;
+}
+
 
 message RemoveUserRequest {
   string userId = 1;

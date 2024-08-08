@@ -1,11 +1,15 @@
 package com.ravi.booking.service;
 
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 import java.util.Random;
 import java.util.concurrent.atomic.AtomicInteger;
 
 import org.ravi.model.GetReceiptRequest;
+import org.ravi.model.GetUsersBySectionRequest;
+import org.ravi.model.GetUsersBySectionResponse;
+import org.ravi.model.GetUsersBySectionResponseList;
 import org.ravi.model.PurchaseTicketRequest;
 import org.ravi.model.Ticket;
 import org.springframework.stereotype.Service;
@@ -51,10 +55,19 @@ public class TicketService {
     //
   }
 
-  public Ticket getReceipt(GetReceiptRequest request) {
-    TicketEntity ticket = ticketRepository.findById(request.getTicketId());
+  public Ticket getReceipt(String ticketId) {
+    TicketEntity ticket = ticketRepository.findById(ticketId);
     return Util.toProto(ticket);
   }
+
+
+
+  public List<TicketEntity> getUsersList(Section section) {
+    return ticketRepository.findBySection(section);
+
+  }
+
+
 
   public double getPrice(Section section){
     if(section==Section.A)
