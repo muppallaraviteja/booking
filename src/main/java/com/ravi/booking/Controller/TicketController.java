@@ -62,7 +62,7 @@ public class TicketController extends TrainBookingServiceGrpc.TrainBookingServic
 
     }
 
-    List<GetUsersBySectionResponse> list = ticketRepository.findBySection(section).stream().map(a-> GetUsersBySectionResponse.newBuilder()
+    List<GetUsersBySectionResponse> list =ticketService.getUsersList(section).stream().map(a-> GetUsersBySectionResponse.newBuilder()
         .setUserName(a.getUser().getFirstName()+" "+a.getUser().getLastName())
         .setSeatNo(a.getSeatNo()).build()
     ).toList();
