@@ -25,22 +25,6 @@
 	</properties>
 	<dependencies>
 		<dependency>
-			<groupId>io.grpc</groupId>
-			<artifactId>grpc-protobuf</artifactId>
-			<version>${grpc.java.version}</version>
-		</dependency>
-		<dependency>
-			<groupId>io.grpc</groupId>
-			<artifactId>grpc-stub</artifactId>
-			<version>${grpc.java.version}</version>
-		</dependency>
-		<dependency> <!-- necessary for Java 9+ -->
-			<groupId>org.apache.tomcat</groupId>
-			<artifactId>annotations-api</artifactId>
-			<version>${tomcat.annotations.version}</version>
-			<scope>provided</scope>
-		</dependency>
-		<dependency>
 			<groupId>net.devh</groupId>
 			<artifactId>grpc-server-spring-boot-starter</artifactId>
 			<version>${grpc.spring.version}</version>
@@ -61,24 +45,21 @@
 			<version>${grpc.java.version}</version>
 		</dependency>
 		<dependency>
-			<groupId>org.springframework.data</groupId>
-			<artifactId>spring-data-jpa</artifactId>
-			<version>3.3.1</version>
+			<groupId>io.grpc</groupId>
+			<artifactId>grpc-protobuf</artifactId>
+			<version>${grpc.java.version}</version>
 		</dependency>
 		<dependency>
-			<groupId>com.h2database</groupId>
-			<artifactId>h2</artifactId>
-			<version>2.3.230</version>
-			<scope>test</scope>
+			<groupId>io.grpc</groupId>
+			<artifactId>grpc-stub</artifactId>
+			<version>${grpc.java.version}</version>
 		</dependency>
-		<dependency>
-			<groupId>org.springframework.boot</groupId>
-			<artifactId>spring-boot-starter-test</artifactId>
-			<scope>test</scope>
+		<dependency> <!-- necessary for Java 9+ -->
+			<groupId>org.apache.tomcat</groupId>
+			<artifactId>annotations-api</artifactId>
+			<version>${tomcat.annotations.version}</version>
+			<scope>provided</scope>
 		</dependency>
-
-
-
 	</dependencies>
 	<build>
 		<extensions>
@@ -107,7 +88,7 @@
 					</protocArtifact>
 					<pluginId>grpc-java</pluginId>
 					<pluginArtifact>
-						io.grpc:protoc-gen-grpc-java:${grpc.java.version}:exe:wnb
+						io.grpc:protoc-gen-grpc-java:${grpc.java.version}:exe:${os.detected.classifier}
 					</pluginArtifact>
 					<protoSourceRoot>
 						${basedir}/src/main/proto/
