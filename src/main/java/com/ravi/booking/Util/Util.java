@@ -28,9 +28,9 @@ public class Util {
     ticketBuilder.setFrom(entity.getSource());
     ticketBuilder.setTo(entity.getDestination());
     if(entity.getSection()== com.ravi.booking.model.Section.A)
-      ticketBuilder.setSection(Section.A);
+      ticketBuilder.setSection(Section.S_A);
     else
-      ticketBuilder.setSection(Section.B);
+      ticketBuilder.setSection(Section.S_B);
 
     return ticketBuilder.build();
   }
