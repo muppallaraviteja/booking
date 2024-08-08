@@ -38,6 +38,7 @@ message Ticket {
   User user = 4;
   double price = 5;
   Section section = 6;
+  int32 seat = 7;
 }
 
 message PurchaseTicketRequest {

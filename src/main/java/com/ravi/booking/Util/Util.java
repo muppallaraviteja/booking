@@ -15,7 +15,7 @@ public class Util {
     Ticket.Builder ticketBuilder = Ticket.newBuilder();
     ticketBuilder.setId(entity.getId()); // Convert Long to int
     ticketBuilder.setPrice(entity.getPrice());
-
+    ticketBuilder.setSeat(entity.getSeatNo());
     if (entity.getUser() != null) {
       UserEntity userEntity = entity.getUser();
       User.Builder userBuilder = User.newBuilder();

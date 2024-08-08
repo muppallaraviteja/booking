@@ -10,7 +10,15 @@ public class UserEntity {
   private String firstName;
   private String lastName;
   private String email;
-  private List<TicketEntity> ticketEntities;
+  private TicketEntity ticketEntities;
+
+  public TicketEntity getTicketEntities() {
+    return ticketEntities;
+  }
+
+  public void setTicketEntities(TicketEntity ticketEntities) {
+    this.ticketEntities = ticketEntities;
+  }
 
   public UserEntity() {
   }
@@ -19,7 +27,6 @@ public class UserEntity {
     this.lastName = lastName;
     this.firstName = firstName;
     this.email = email;
-    ticketEntities = new ArrayList<>();
     this.id = UUID.randomUUID().toString();
   }
 
@@ -55,7 +62,4 @@ public class UserEntity {
     return id;
   }
 
-  public void addTicket(TicketEntity ticket){
-    this.ticketEntities.add(ticket);
-  }
 }
