@@ -35,11 +35,9 @@ import net.devh.boot.grpc.server.service.GrpcService;
 public class TicketController extends TrainBookingServiceGrpc.TrainBookingServiceImplBase {
 
   private final TicketService ticketService;
-  private final TicketRepository ticketRepository;
 
-  public TicketController(TicketService ticketService, TicketRepository ticketRepository) {
+  public TicketController(TicketService ticketService) {
     this.ticketService = ticketService;
-    this.ticketRepository = ticketRepository;
   }
 
   @Override
