@@ -5,6 +5,7 @@ import java.util.Map;
 import java.util.Random;
 import java.util.concurrent.atomic.AtomicInteger;
 
+import org.ravi.model.GetReceiptRequest;
 import org.ravi.model.PurchaseTicketRequest;
 import org.ravi.model.Ticket;
 import org.springframework.stereotype.Service;
@@ -30,7 +31,7 @@ public class TicketService {
     seatCounters.put(Section.B, new AtomicInteger(1));
   }
 
-  public Ticket purchaseTicket(PurchaseTicketRequest request) {
+  public String purchaseTicket(PurchaseTicketRequest request) {
     // Create user and ticket
     // Save user and ticket to database
     UserEntity user = userRepository.findByEmail(request.getUser().getEmail());
@@ -45,6 +46,13 @@ public class TicketService {
     int seatNumber = seatCounters.get(section).getAndIncrement();
     TicketEntity ticket = new TicketEntity( user,price, section, seatNumber, request.getJourney().getTo(),request.getJourney().getFrom());
     ticket = ticketRepository.save(ticket);
+    user.addTicket(ticket);
+    return ticket.getId();
+    //
+  }
+
+  public Ticket getReceipt(GetReceiptRequest request) {
+    TicketEntity ticket = ticketRepository.findById(request.getTicketId());
     return Util.toProto(ticket);
   }
 
@@ -54,6 +62,4 @@ public class TicketService {
     else
       return 100.0;
   }
-
-
 }

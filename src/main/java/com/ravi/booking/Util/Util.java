@@ -16,13 +16,15 @@ public class Util {
     ticketBuilder.setId(entity.getId()); // Convert Long to int
     ticketBuilder.setPrice(entity.getPrice());
 
-    // Handle User mapping (if UserEntity has relevant fields)
     if (entity.getUser() != null) {
       UserEntity userEntity = entity.getUser();
       User.Builder userBuilder = User.newBuilder();
-      // Set user fields based on UserEntity data (e.g., id, firstName, lastName)
-      userBuilder.setId(userEntity.getId()); // Convert Long to int (assuming id in UserEntity)
-      // ... set other user fields
+
+      userBuilder.setId(userEntity.getId())
+          .setFirstName(userEntity.getFirstName())
+          .setLastName(userEntity.getLastName())
+          .setEmail(userEntity.getEmail());
+
       ticketBuilder.setUser(userBuilder.build());
     }
     ticketBuilder.setFrom(entity.getSource());

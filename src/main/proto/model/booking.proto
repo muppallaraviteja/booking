@@ -5,7 +5,8 @@ option java_package = "org.ravi.model";
 option java_outer_classname = "TrainBookingProto";
 
 service TrainBookingService {
-  rpc PurchaseTicket (PurchaseTicketRequest) returns (PurchaseTicketResponse) {}
+  rpc PurchaseTicket (PurchaseTicketRequest) returns (PurchaseTicketResponse) {};
+  rpc getReceipt (GetReceiptRequest) returns (GetReceiptResponse) {}
 }
 
 
@@ -40,9 +41,36 @@ message PurchaseTicketRequest {
   User user = 1;
   Journey journey = 2;
 }
-
 message PurchaseTicketResponse {
+  string ticketId = 1;
+}
+
+message GetReceiptRequest {
+  string ticketId = 1;
+}
+
+message GetReceiptResponse{
   Ticket ticket = 1;
 }
+
+
+message GetUsersBySectionRequest {
+  string section = 1;
+}
+
+message UsersResponse {
+  repeated User users = 1;
+}
+
+message RemoveUserRequest {
+  string userId = 1;
+}
+
+message ModifySeatRequest {
+  string userId = 1;
+  int32 newSeatNumber = 2;
+  string section = 3;
+}
+
 
 

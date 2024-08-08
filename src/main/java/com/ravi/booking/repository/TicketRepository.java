@@ -16,4 +16,9 @@ public class TicketRepository{
     return entity;
   }
 
+  public TicketEntity findById(String ticketId) {
+    if(map.containsKey(ticketId))
+      return map.get(ticketId);
+    return null;
+  }
 }

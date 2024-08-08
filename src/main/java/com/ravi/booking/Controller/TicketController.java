@@ -1,6 +1,8 @@
 package com.ravi.booking.controller;
 
 
+import org.ravi.model.GetReceiptRequest;
+import org.ravi.model.GetReceiptResponse;
 import org.ravi.model.PurchaseTicketRequest;
 import org.ravi.model.PurchaseTicketResponse;
 import org.ravi.model.Ticket;
@@ -23,9 +25,40 @@ public class TicketController extends TrainBookingServiceGrpc.TrainBookingServic
   @Override
   public void purchaseTicket(PurchaseTicketRequest request,
       StreamObserver<PurchaseTicketResponse> responseObserver) {
-    Ticket ticket = ticketService.purchaseTicket(request);
-    PurchaseTicketResponse response = PurchaseTicketResponse.newBuilder().setTicket(ticket).build();
+    String ticketId = ticketService.purchaseTicket(request);
+    PurchaseTicketResponse response = PurchaseTicketResponse.newBuilder().setTicketId(ticketId).build();
     responseObserver.onNext(response);
     responseObserver.onCompleted();
   }
+
+  @Override
+  public void getReceipt(GetReceiptRequest request,
+      StreamObserver<GetReceiptResponse> responseObserver) {
+    // Call service layer
+    Ticket ticket = ticketService.getReceipt(request);
+    GetReceiptResponse response = GetReceiptResponse.newBuilder().setTicket(ticket).build();
+    responseObserver.onNext(response);
+    responseObserver.onCompleted();
+  }
+
+/*
+
+
+  @Override
+  public void getUsersBySection(GetUsersBySectionRequest request, StreamObserver<UsersResponse> responseObserver) {
+    // Call service layer
+  }
+
+  @Override
+  public void removeUser(RemoveUserRequest request, StreamObserver<Empty> responseObserver) {
+    // Call service layer
+  }
+
+  @Override
+  public void modifySeat(ModifySeatRequest request, StreamObserver<Empty> responseObserver) {
+    // Call service layer
+  }
+*/
+
+
 }
