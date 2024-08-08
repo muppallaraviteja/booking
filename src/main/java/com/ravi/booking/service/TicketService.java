@@ -61,6 +61,11 @@ public class TicketService {
     return Util.toProto(ticket);
   }
 
+  public void removeUserBooking(String ticketId) {
+    ticketRepository.delete(ticketId);
+
+  }
+
 
 
   public List<TicketEntity> getUsersList(Section section) {
@@ -68,7 +73,14 @@ public class TicketService {
 
   }
 
+  public Ticket modifySeat(String ticketId) {
+    TicketEntity ticket = ticketRepository.findById(ticketId);
+    Section section = new Random().nextBoolean() ? Section.A : Section.B;
+    int seatNumber = selectionStrategy.selectSeat(section, ticketRepository.getAllocatedSeats(section));
+    ticket.setSeatNo(seatNumber);
+    return Util.toProto(ticket);
 
+  }
 
   public double getPrice(Section section){
     if(section==Section.A)

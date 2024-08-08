@@ -60,4 +60,14 @@ public class TicketRepository{
   public Set<Integer> getAllocatedSeats(Section section) {
     return allocatedSeats.get(section);
   }
+
+  public void delete(String ticketId) {
+    TicketEntity ticket = map.remove(ticketId);
+    if (ticket != null) {
+      SeatAssignment seatAssignment = new SeatAssignment(ticket.getSeatNo(), ticket.getSection());
+      seatToTicketMap.remove(seatAssignment);
+      allocatedSeats.get(seatAssignment.getSection()).remove(seatAssignment.getSeatNumber());
+    }
+  }
+
 }

@@ -8,12 +8,19 @@ import org.ravi.model.GetReceiptResponse;
 import org.ravi.model.GetUsersBySectionRequest;
 import org.ravi.model.GetUsersBySectionResponse;
 import org.ravi.model.GetUsersBySectionResponseList;
+import org.ravi.model.ModifySeatRequest;
+import org.ravi.model.ModifySeatResponse;
 import org.ravi.model.PurchaseTicketRequest;
 import org.ravi.model.PurchaseTicketResponse;
+import org.ravi.model.RemoveUserRequest;
+import org.ravi.model.RemoveUserResponse;
 import org.ravi.model.Section;
 import org.ravi.model.Ticket;
 import org.ravi.model.TrainBookingServiceGrpc;
 
+import com.google.protobuf.Empty;
+import com.ravi.booking.Util.Util;
+import com.ravi.booking.model.TicketEntity;
 import com.ravi.booking.repository.TicketRepository;
 import com.ravi.booking.service.TicketService;
 
@@ -71,21 +78,28 @@ public class TicketController extends TrainBookingServiceGrpc.TrainBookingServic
       responseObserver.onCompleted();
   }
 
-
-/*
-
-
-
   @Override
-  public void removeUser(RemoveUserRequest request, StreamObserver<Empty> responseObserver) {
-    // Call service layer
+  public void removeUser(RemoveUserRequest request,
+      StreamObserver<RemoveUserResponse> responseObserver) {
+    ticketService.removeUserBooking(request.getTicketId());
+    responseObserver.onNext(RemoveUserResponse.getDefaultInstance());
+    responseObserver.onCompleted();
   }
 
   @Override
-  public void modifySeat(ModifySeatRequest request, StreamObserver<Empty> responseObserver) {
-    // Call service layer
+  public void modifySeat(ModifySeatRequest request, StreamObserver<ModifySeatResponse> responseObserver) {
+      Ticket ticket = ticketService.modifySeat(request.getTicketId());
+      var response = ModifySeatResponse.newBuilder()
+          .setNewSeatNumber(ticket.getSeat())
+          .setSection(ticket.getSection())
+              .setTickerId(ticket.getId()).build();
+      responseObserver.onNext(response);
+      responseObserver.onCompleted();
+
+
   }
-*/
+
+
 
 
 }

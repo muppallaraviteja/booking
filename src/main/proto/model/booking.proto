@@ -73,7 +73,7 @@ message GetUsersBySectionResponseList {
 
 
 message RemoveUserRequest {
-  string userId = 1;
+  string ticketId = 1;
 }
 
 message RemoveUserResponse {
@@ -88,7 +88,7 @@ message ModifySeatRequest {
 message ModifySeatResponse {
   string tickerId = 1;
   int32 newSeatNumber = 2;
-  string section=3;
+  Section section=3;
 }
 
 
