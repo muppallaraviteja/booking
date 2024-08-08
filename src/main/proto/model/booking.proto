@@ -8,6 +8,8 @@ service TrainBookingService {
   rpc PurchaseTicket (PurchaseTicketRequest) returns (PurchaseTicketResponse) {};
   rpc getReceipt (GetReceiptRequest) returns (GetReceiptResponse) {}
   rpc getUsersBySection (GetUsersBySectionRequest) returns (GetUsersBySectionResponseList) {}
+  rpc RemoveUser (RemoveUserRequest) returns (RemoveUserResponse) {}
+  rpc ModifySeat (ModifySeatRequest) returns (ModifySeatResponse) {}
 }
 
 
@@ -73,11 +75,19 @@ message RemoveUserRequest {
   string userId = 1;
 }
 
-message ModifySeatRequest {
-  string userId = 1;
-  int32 newSeatNumber = 2;
-  string section = 3;
+message RemoveUserResponse {
+  bool removed = 1;
 }
 
+message ModifySeatRequest {
+  string ticketId = 1;
+}
+
+
+message ModifySeatResponse {
+  string tickerId = 1;
+  int32 newSeatNumber = 2;
+  string section=3;
+}
 
 
