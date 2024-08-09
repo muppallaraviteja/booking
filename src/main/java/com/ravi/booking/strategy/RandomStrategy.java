@@ -6,7 +6,7 @@ import java.util.*;
 
 public class RandomStrategy implements SeatSelectionStrategy {
 
-  private static final int MAX_SEATS = 1;
+  private static final int MAX_SEATS = 50;
   private final Random random = new Random();
 
   @Override

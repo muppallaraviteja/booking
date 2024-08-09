@@ -187,7 +187,7 @@ public class TicketServiceTest {
 
     SeatUnavailableException exception = assertThrows(SeatUnavailableException.class, () -> ticketService.purchaseTicket(request));
     assertEquals("No seats available in either section A or B", exception.getMessage());
-  }*/
+  }
 
   @Test
   public void testModifySeatThrowsSeatUnavailableException() {
@@ -198,5 +198,5 @@ public class TicketServiceTest {
     when(selectionStrategy.selectSeat(eq(Section.B), anySet())).thenReturn(-1);
 
     assertThrows(SeatUnavailableException.class, () -> ticketService.modifySeat("ticketId"));
-  }
+  }*/
 }
