@@ -1,4 +1,4 @@
-package com.ravi.booking.controller;
+package com.ravi.booking.server;
 
 
 import org.ravi.model.HelloReply;
@@ -10,7 +10,7 @@ import net.devh.boot.grpc.server.service.GrpcService;
 
 //
 @GrpcService
-public class HelloService extends MyServiceImplBase {
+public class HelloServer extends MyServiceImplBase {
   @Override
   public void sayHello(HelloRequest request, StreamObserver<HelloReply> responseObserver) {
     HelloReply reply = HelloReply.newBuilder()

@@ -16,6 +16,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Optional;
 import java.util.Random;
 
 @Service
@@ -36,10 +37,12 @@ public class TicketService {
   public String purchaseTicket(PurchaseTicketRequest request) {
     try {
       UserEntity user = userRepository.findByEmail(request.getUser().getEmail());
-      if (user == null) {
-        user = new UserEntity(request.getUser().getLastName(), request.getUser().getFirstName(), request.getUser().getEmail());
-        user = userRepository.save(user);
-      }
+      user = Optional.ofNullable(user)
+          .orElseGet(() -> userRepository.save(new UserEntity(
+              request.getUser().getLastName(),
+              request.getUser().getFirstName(),
+              request.getUser().getEmail()
+          )));
 
       Section section = new Random().nextBoolean() ? Section.A : Section.B;
       int seatNumber = selectionStrategy.selectSeat(section, ticketRepository.getAllocatedSeats(section));

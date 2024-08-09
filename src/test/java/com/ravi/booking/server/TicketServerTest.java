@@ -1,16 +1,11 @@
-package com.ravi.booking.controller;
+package com.ravi.booking.server;
 
-import com.ravi.booking.controller.TicketController;
-import com.ravi.booking.exception.SeatUnavailableException;
-import com.ravi.booking.exception.TicketNotFoundException;
 import io.grpc.StatusRuntimeException;
 import net.devh.boot.grpc.client.inject.GrpcClient;
 import org.junit.jupiter.api.Test;
-import org.junit.jupiter.api.extension.ExtendWith;
 import org.ravi.model.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.test.context.junit.jupiter.SpringExtension;
 
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -19,13 +14,13 @@ import static org.junit.jupiter.api.Assertions.*;
     "grpc.server.in-process-name=integration-test",
     "grpc.client.user-service.address=in-process:integration-test"
 })
-public class TicketControllerTest {
+public class TicketServerTest {
 
   @GrpcClient("in-process")
   private TrainBookingServiceGrpc.TrainBookingServiceBlockingStub stub;
 
   @Autowired
-  private TicketController ticketController;
+  private TicketServer ticketServer;
 
   // 1. Purchase Ticket Test - Success Scenario
   @Test
